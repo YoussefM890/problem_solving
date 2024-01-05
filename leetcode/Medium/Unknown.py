@@ -1,4 +1,34 @@
-from typing import List
+from collections import deque, Counter, defaultdict
+from functools import cache, reduce
+from math import inf
+from typing import List, Optional
+
+class LongestPalindromicSubstring :
+    def longestPalindrome(self, l: str) -> str:
+        # @cache
+        def dp(s,e):
+            if s == e  : return [1,l[s]]
+            print( l[s:e+1] , " ",l[e:s-1:-1] , " ",[e-s+1,l[s:e+1]])
+            if l[s:e+1] == l[e:s-1:-1]: return [e-s+1,l[s:e+1]]
+            return sorted([dp(s+1,e),dp(s,e-1)],key = lambda x : x[0],reverse = True)[0]
+        return dp(0,len(l)-1)[1]
+
+longest_palindromic_substring = LongestPalindromicSubstring()
+# print(longest_palindromic_substring.longestPalindrome("bb"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class Solution:
@@ -87,8 +117,8 @@ class RottingOranges:
 
 
 rottingOranges = RottingOranges()
-print(rottingOranges.orangesRotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]))
-print(rottingOranges.orangesRotting([[2, 1, 1], [0, 1, 1], [1, 0, 1]]))
+# print(rottingOranges.orangesRotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]))
+# print(rottingOranges.orangesRotting([[2, 1, 1], [0, 1, 1], [1, 0, 1]]))
 
 
 class Build_Array_Where_You_Can_Find_The_Maximum_Exactly_K_Comparisons:
@@ -108,3 +138,64 @@ class Build_Array_Where_You_Can_Find_The_Maximum_Exactly_K_Comparisons:
 
 buildArrayWhereYouCanFindTheMaximumExactlyKComparisons = Build_Array_Where_You_Can_Find_The_Maximum_Exactly_K_Comparisons()
 # print(buildArrayWhereYouCanFindTheMaximumExactlyKComparisons.numOfArrays(5,3,3))
+class Determine_if_a_Cell_Is_Reachable_at_a_Given_Time :
+    def isReachableAtTime(self, sx: int, sy: int, fx: int, fy: int, t: int) -> bool:
+        x = abs(fx - sx)
+        y = abs(fy - sx)
+        m = min(x,y)
+        return t>= m + abs(x-y)
+
+# determine_if_a_cell_is_reachable_at_a_given_time = Determine_if_a_Cell_Is_Reachable_at_a_Given_Time()
+# print(determine_if_a_cell_is_reachable_at_a_given_time.isReachableAtTime(
+#     1,4,1,2,1
+# ))
+
+class Arithmetic_Subarrays :
+    def checkArithmeticSubarrays(self, nums: List[int], l: List[int], r: List[int]) -> List[bool]:
+        pass
+
+
+class Longest_Turbulent_Subarray :
+    def maxTurbulenceSize(self, arr: List[int]) -> int:
+        if len(arr) == 1 : return 1
+        l = []
+        for i in range(1,len(arr)):
+            if arr[i-1] < arr[i] : l.append(1)
+            elif arr[i-1] > arr[i] : l.append(-1)
+            else : l.append(0)
+        res,i,j = 0,0,1
+        while j < len(l):
+            if l[j] == 0 :
+                res = max(res,j-i+1)
+                i = j+1
+                j = j+2
+            elif l[j] != l[j-1]:
+                j+=1
+            else :
+                res = max(res,j-i+1)
+                i = j
+                j += 1
+        return max(res,j-i+1)
+
+_978 = Longest_Turbulent_Subarray()
+print(_978.maxTurbulenceSize(
+[100]
+))
+
+class Number_of_Laser_Beams_in_a_Bank :
+    def numberOfBeams(self, bank: List[str]) -> int:
+        res = last = 0
+        for i in bank :
+            c = i.count('1')
+            if c != 0 :
+                res+=last*c
+                last = c
+        return res
+
+
+
+
+
+
+
+

@@ -25,3 +25,16 @@ def decodeAtIndex(s: str, k: int) -> str:
             return find_k(k % length_list[ind])
     return find_k(k-1)
 print(decodeAtIndex("abc1",1))
+
+class Separate_Black_and_White_Balls :
+    def minimumSteps(self, s: str) -> int:
+        ones = 0
+        res = 0
+        for i in s :
+            if i == '1' :
+                ones+=1
+            else :
+               res+=ones
+        return res
+_2938 = Separate_Black_and_White_Balls()
+print(_2938.minimumSteps("0111"))

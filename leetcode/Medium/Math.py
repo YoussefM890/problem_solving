@@ -16,3 +16,21 @@ class Solution:
                 return True
 
         return False
+
+class Count_Number_of_Homogenous_Substrings :
+    def countHomogenous(self, s: str) -> int:
+        res,c,prev = 0,0,s[0]
+        for i in s :
+            if i == prev :
+                c += 1
+            else :
+                res += (c / 2 ) * (c+1)
+                c = 1
+                prev = i
+        res += (c / 2 ) * (c+1)
+        return int(res)
+
+count_number_of_homogenous_substrings = Count_Number_of_Homogenous_Substrings()
+print(count_number_of_homogenous_substrings.countHomogenous(
+    "abbcccaa"
+))

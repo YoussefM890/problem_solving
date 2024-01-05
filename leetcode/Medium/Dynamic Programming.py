@@ -29,5 +29,30 @@ class Max_Dot_Product_Of_Two_Subsequences :
                            dp(i+1,j+1)
             )
         return dp(0,0)
-max_dot_product_of_two_subsequences = Max_Dot_Product_Of_Two_Subsequences()
-print(max_dot_product_of_two_subsequences.maxDotProduct([-1,-1],[1,1]))
+# max_dot_product_of_two_subsequences = Max_Dot_Product_Of_Two_Subsequences()
+# print(max_dot_product_of_two_subsequences.maxDotProduct([-1,-1],[1,1]))
+class Knight_Dialer :
+    def knightDialer(self, n: int) -> int:
+        if n == 1 :
+            return 10
+        # moves = [[4,5],[5,7],[6,8],[4,7],[3,8,0],[1,6,0],[2,5],[1,3],[2,4]]
+        moves = [[1,2],[0,0],[0,0,3],[2,2]]
+        ln = len(moves)
+        dp = [[0 for j in range(n-1)] for i in range(ln)]
+        for j in range(n-1):
+            for i in range(ln):
+                if j == 0 :
+                    dp[i][j] = len(moves[i])
+                else :
+                    res = 0
+                    for move in moves[i]:
+                        res += dp[move][j-1]
+                    dp[i][j] = res
+        # print([dp[i][n-2] for i in range(ln)])
+        mult = [4,2,2,1]
+        return sum([dp[i][n-2]*mult[i] for i in range(ln)]) % (10**9 +7)
+_935 = Knight_Dialer()
+print(_935.knightDialer(2))
+print(_935.knightDialer(3))
+print(_935.knightDialer(4))
+print(_935.knightDialer(5))
