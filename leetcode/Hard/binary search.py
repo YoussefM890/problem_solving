@@ -1,4 +1,4 @@
-from bisect import bisect
+from bisect import bisect, bisect_left
 from typing import List
 
 
@@ -85,3 +85,28 @@ class Find_In_Mountain_Array:
 mountain_array = MountainArray([0,5,3,1])
 find_in_mountain_array = Find_In_Mountain_Array()
 print(find_in_mountain_array.findInMountainArray(1, mountain_array))
+
+class Find_Median_from_Data_Stream :
+    def __init__(self):
+        self.l = []
+        self.median = 0
+    def addNum(self, num: int) -> None:
+        x = bisect_left(self.l,num)
+        self.l.insert(x,num) # this should be optimized
+
+    def findMedian(self) -> float:
+        mid = len(self.l) // 2
+        if mid == 0 : return self.l[0]
+        if len(self.l) % 2 :return self.l[mid]
+        return (self.l[mid] + self.l[mid - 1]) / 2
+
+_295 = Find_Median_from_Data_Stream()
+_295.addNum(1)
+print(_295.l)
+print(_295.findMedian())
+_295.addNum(2)
+print(_295.l)
+print(_295.findMedian())
+_295.addNum(3)
+print(_295.l)
+print(_295.findMedian())

@@ -1,10 +1,9 @@
 from math import inf
 import sys
-from collections import defaultdict
+from collections import defaultdict, Counter
 from functools import reduce
 from heapq import *
 from itertools import *
-a,b,c = [1,[2,3]]
-print(a)
-print(b)
-print(c)
+arr = [1,2,3,4,5]
+c = Counter(arr)
+print(len(set(i for i in c.values())) == len(c))

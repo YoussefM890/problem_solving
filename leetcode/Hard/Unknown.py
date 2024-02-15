@@ -3,56 +3,63 @@ from collections import deque, Counter
 from functools import reduce, cache
 from math import inf, ceil, log
 from typing import List
+from bisect import bisect_right,bisect_left
 
-
-class Constrained_Subsequence_Sum :
+class Constrained_Subsequence_Sum:
     def constrainedSubsetSum(self, n: List[int], k: int) -> int:
         l = []
-        tmp  = []
+        tmp = []
         c = 1
         i = 0
         while i < len(n):
-            if n[i] >= 0 :
+            if n[i] >= 0:
                 l.append(n[i])
-            else :
+            else:
                 s = i
                 i += 1
-                while i < len(n) and n[i] < 0 :
-                    i+=1
-                if i - s >= k :
+                while i < len(n) and n[i] < 0:
+                    i += 1
+                if i - s >= k:
                     l.extend(n[s:i])
-                if i < len(n) : l.append(n[i])
+                if i < len(n): l.append(n[i])
 
-            i+=1
+            i += 1
         ln = len(l)
+
         @cache
-        def dp(x,c) :
-            if x == ln : return 0 if c >= 1 else -inf
-            take = l[x] + dp(x+1,1)
-            leave =  0 if c >= k or c>=1 and l[x]>=0  else dp(x+1 ,c+1)
-            return max(take,leave)
-        return dp(0,-inf)
+        def dp(x, c):
+            if x == ln: return 0 if c >= 1 else -inf
+            take = l[x] + dp(x + 1, 1)
+            leave = 0 if c >= k or c >= 1 and l[x] >= 0 else dp(x + 1, c + 1)
+            return max(take, leave)
+
+        return dp(0, -inf)
+
 
 constrained_subsequence_sum = Constrained_Subsequence_Sum()
 constrained_subsequence_sum.constrainedSubsetSum(
-[10,2,-10,-2,5,20,5,-1,1,-6,-1,1,-9],
+    [10, 2, -10, -2, 5, 20, 5, -1, 1, -6, -1, 1, -9],
     2
 )
 
 
-class Find_Building_Where_Alice_and_Bob_Can_Meet :
+class Find_Building_Where_Alice_and_Bob_Can_Meet:
     def leftmostBuildingQueries(self, l: List[int], q: List[List[int]]) -> List[int]:
-        res = [-1]*len(q)
-        q = [[max(i,j),max(l[i],l[j])] for i,j in q]
-        q.sort(key=lambda x:x[0] * 50001 + x[1])
+        res = [-1] * len(q)
+        q = [[max(i, j), max(l[i], l[j])] for i, j in q]
+        q.sort(key=lambda x: x[0] * 50001 + x[1])
         m = [[q[0]]]
-        for i in range(1,len(q)):
-            if q[i][0] == m[-1][-1][0] :
+        for i in range(1, len(q)):
+            if q[i][0] == m[-1][-1][0]:
                 m[-1].append(q[i])
-            else :
+            else:
                 m.append([q[i]])
         print(m)
+
+
 _2940 = Find_Building_Where_Alice_and_Bob_Can_Meet()
+
+
 # print(_2940.leftmostBuildingQueries(
 # [1,2,1,2,1,2]
 #     ,
@@ -62,40 +69,31 @@ _2940 = Find_Building_Where_Alice_and_Bob_Can_Meet()
 # ))
 
 
-
 # _2147 = Number_of_Ways_to_Dividea_Long_Corridor()
 # print(_2147.numberOfWays("SPSPPSSPSSSS"))
 
 
+
 class Falling_Squares:
     def fallingSquares(self, positions: List[List[int]]) -> List[int]:
-        l = [(i,i+j,j) for i,j in positions]
+        pass
+    def add_and_merge(self,intervals, new_interval):
+        # Add the new interval initially
+        intervals.append(new_interval)
+        # Sort the intervals based on the start time
+        intervals.sort(key=lambda x: x[0])
 
-_699 = Falling_Squares()
-print(_699.fallingSquares(
-[[1,2],[2,3],[6,1]]
-))
+        merged = []
+        for interval in intervals:
+            # If the list of merged intervals is empty or if the current
+            # interval does not overlap with the previous one, append it.
+            if not merged or merged[-1][1] < interval[0]:
+                merged.append(interval)
+            else:
+                # There is overlap, so merge the current and previous intervals.
+                merged[-1][1] = max(merged[-1][1], interval[1])
+                merged[-1][2] = merged[-1]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return merged
 
 
