@@ -5,6 +5,7 @@ from math import inf
 from typing import List, Optional
 from leetcode.data_structures import ListNode, TreeNode
 
+
 class LongestPalindromicSubstring:
     def longestPalindrome(self, l: str) -> str:
         # @cache
@@ -210,8 +211,6 @@ class Out_of_Boundary_Paths:
         if queue:
             r, c = queue.pop()
             if r + 1 == m: res += 1
-            if r == 0 : res += 1
+            if r == 0: res += 1
             if c + 1 == n: res += 1
-            if c == 0 : res += 1
-
-
+            if c == 0: res += 1
