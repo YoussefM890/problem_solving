@@ -1,3 +1,4 @@
+import string
 from collections import deque, Counter, defaultdict
 from functools import cache, reduce
 from math import inf
@@ -215,8 +216,26 @@ class Out_of_Boundary_Paths:
             if c + 1 == n: res += 1
             if c == 0: res += 1
 
+class   Design_Add_and_Search_Words_Data_Structure :
+    def __init__(self):
+        self.d = set()
 
-
+    def addWord(self, word: str) -> None:
+        self.d.add(word)
+    def search(self, word: str) -> bool:
+        p1 = word.find('.')
+        if p1 == -1 : return word in self.d
+        p2 = word.rfind('.')
+        if p1 == p2 :
+            for i in string.ascii_lowercase :
+                if word.replace('.',i) in self.d :
+                    return True
+            return False
+        for i in string.ascii_lowercase :
+            for j in string.ascii_lowercase :
+                if (word[:p2]+j+word[p2+1:]).replace('.',i) in self.d :
+                    return True
+        return False
 
 
 
